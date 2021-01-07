@@ -1,0 +1,184 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`body css generates CSS with class attribute 1`] = `
+Object {
+  "bodyCSS": ":root {
+--hello: world;
+--colors-primary: black;
+--colors-background: white;
+--colors-grey-100: #fff;
+--colors-grey-500: black;
+--shadows-box: 2px 2px 2px black;
+}
+
+.dark {
+--hello: world;
+--colors-primary: white;
+--colors-background: black;
+--colors-grey-100: #fff;
+--colors-grey-500: black;
+--shadows-box: 2px 2px 2px black;
+}
+
+.light {
+--hello: world;
+--colors-primary: black;
+--colors-background: white;
+--colors-grey-100: #fff;
+--colors-grey-500: black;
+--shadows-box: 2px 2px 2px black;
+}",
+  "transformedThemes": Object {
+    "dark": Object {
+      "colors": Object {
+        "background": "var(--colors-background)",
+        "grey": Object {
+          "100": "var(--colors-grey-100)",
+          "500": "var(--colors-grey-500)",
+        },
+        "primary": "var(--colors-primary)",
+      },
+      "hello": "var(--hello)",
+      "shadows": Object {
+        "box": "var(--shadows-box)",
+      },
+    },
+    "light": Object {
+      "colors": Object {
+        "background": "var(--colors-background)",
+        "grey": Object {
+          "100": "var(--colors-grey-100)",
+          "500": "var(--colors-grey-500)",
+        },
+        "primary": "var(--colors-primary)",
+      },
+      "hello": "var(--hello)",
+      "shadows": Object {
+        "box": "var(--shadows-box)",
+      },
+    },
+  },
+}
+`;
+
+exports[`body css generates CSS with dark default theme 1`] = `
+Object {
+  "bodyCSS": ":root {
+--hello: world;
+--colors-primary: white;
+--colors-background: black;
+--colors-grey-100: #fff;
+--colors-grey-500: black;
+--shadows-box: 2px 2px 2px black;
+}
+
+[data-theme=\\"dark\\"] {
+--hello: world;
+--colors-primary: white;
+--colors-background: black;
+--colors-grey-100: #fff;
+--colors-grey-500: black;
+--shadows-box: 2px 2px 2px black;
+}
+
+[data-theme=\\"light\\"] {
+--hello: world;
+--colors-primary: black;
+--colors-background: white;
+--colors-grey-100: #fff;
+--colors-grey-500: black;
+--shadows-box: 2px 2px 2px black;
+}",
+  "transformedThemes": Object {
+    "dark": Object {
+      "colors": Object {
+        "background": "var(--colors-background)",
+        "grey": Object {
+          "100": "var(--colors-grey-100)",
+          "500": "var(--colors-grey-500)",
+        },
+        "primary": "var(--colors-primary)",
+      },
+      "hello": "var(--hello)",
+      "shadows": Object {
+        "box": "var(--shadows-box)",
+      },
+    },
+    "light": Object {
+      "colors": Object {
+        "background": "var(--colors-background)",
+        "grey": Object {
+          "100": "var(--colors-grey-100)",
+          "500": "var(--colors-grey-500)",
+        },
+        "primary": "var(--colors-primary)",
+      },
+      "hello": "var(--hello)",
+      "shadows": Object {
+        "box": "var(--shadows-box)",
+      },
+    },
+  },
+}
+`;
+
+exports[`body css generates CSS with default options 1`] = `
+Object {
+  "bodyCSS": ":root {
+--hello: world;
+--colors-primary: black;
+--colors-background: white;
+--colors-grey-100: #fff;
+--colors-grey-500: black;
+--shadows-box: 2px 2px 2px black;
+}
+
+[data-theme=\\"dark\\"] {
+--hello: world;
+--colors-primary: white;
+--colors-background: black;
+--colors-grey-100: #fff;
+--colors-grey-500: black;
+--shadows-box: 2px 2px 2px black;
+}
+
+[data-theme=\\"light\\"] {
+--hello: world;
+--colors-primary: black;
+--colors-background: white;
+--colors-grey-100: #fff;
+--colors-grey-500: black;
+--shadows-box: 2px 2px 2px black;
+}",
+  "transformedThemes": Object {
+    "dark": Object {
+      "colors": Object {
+        "background": "var(--colors-background)",
+        "grey": Object {
+          "100": "var(--colors-grey-100)",
+          "500": "var(--colors-grey-500)",
+        },
+        "primary": "var(--colors-primary)",
+      },
+      "hello": "var(--hello)",
+      "shadows": Object {
+        "box": "var(--shadows-box)",
+      },
+    },
+    "light": Object {
+      "colors": Object {
+        "background": "var(--colors-background)",
+        "grey": Object {
+          "100": "var(--colors-grey-100)",
+          "500": "var(--colors-grey-500)",
+        },
+        "primary": "var(--colors-primary)",
+      },
+      "hello": "var(--hello)",
+      "shadows": Object {
+        "box": "var(--shadows-box)",
+      },
+    },
+  },
+}
+`;
