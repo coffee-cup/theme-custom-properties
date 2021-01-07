@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -27,6 +27,14 @@
   },
   "name": "theme-custom-properties",
   "author": "Jake Runzer",
+  "homepage": "https://github.com/coffee-cup/theme-custom-properties",
+  "bugs": {
+    "url": "https://github.com/coffee-cup/theme-custom-properties/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coffee-cup/theme-custom-properties.git"
+  },
   "module": "dist/theme-custom-properties.esm.js",
   "size-limit": [
     {
