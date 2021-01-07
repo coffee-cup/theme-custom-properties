@@ -1,103 +1,141 @@
-# TSDX User Guide
+# theme-custom-properties
 
-Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
+![CI](https://github.com/coffee-cup/theme-custom-properties/workflows/CI/badge.svg)
+[![](https://img.shields.io/npm/v/theme-custom-properties?style=flat-square)](https://www.npmjs.com/package/theme-custom-properties)
+[![](https://img.shields.io/github/license/coffee-cup/theme-custom-properties?style=flat-square&color=brightgreen)](https://github.com/coffee-cup/theme-custom-properties/blob/main/LICENSE)
 
-> This TSDX setup is meant for developing libraries (not apps!) that can be published to NPM. If you’re looking to build a Node app, you could use `ts-node-dev`, plain `ts-node`, or simple `tsc`.
+Convert a theme object to CSS custom properties (variables) and CSS that you can add to your website.
 
-> If you’re new to TypeScript, checkout [this handy cheatsheet](https://devhints.io/typescript)
+```ts
+import { transformThemeToCustomProperties } from "theme-custom-properties";
 
-## Commands
+const { bodyCSS, transformedTheme } = transformThemeToCustomProperties({
+  light: {
+    colors: {
+      foreground: "black",
+      background: "white"
+    }
+  },
+  dark: {
+    colors: {
+      foreground: "white",
+      background: "black"
+    }
+  }
+});
 
-TSDX scaffolds your new library inside `/src`.
+console.log(bodyCSS);
+/*
 
-To run TSDX, use:
+:root {
+  --colors-foreground: "black";
+  --colors-background: "white";
+}
 
-```bash
-npm start # or yarn start
+[data-theme="light"] {
+  --colors-foreground: "black";
+  --colors-background: "white";
+}
+
+[data-theme="dark"] {
+  --colors-foreground: "black";
+  --colors-background: "white";
+}
+*/
+
+console.log(transformedTheme)
+/*
+{
+  light: {
+    colors: {
+      foreground: "var(--colors-foreground)",
+      background: "var(--colors-background)"
+    }
+  },
+  dark: {
+    colors: {
+      foreground: "var(--colors-foreground)",
+      background: "var(--colors-background)"
+    }
+  }
+}
+*/
 ```
 
-This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
+## Install
 
-To do a one-off build, use `npm run build` or `yarn build`.
-
-To run tests, use `npm test` or `yarn test`.
-
-## Configuration
-
-Code quality is set up for you with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
-
-### Jest
-
-Jest tests are set up to run with `npm test` or `yarn test`.
-
-### Bundle Analysis
-
-[`size-limit`](https://github.com/ai/size-limit) is set up to calculate the real cost of your library with `npm run size` and visualize the bundle with `npm run analyze`.
-
-#### Setup Files
-
-This is the folder structure we set up for you:
-
-```txt
-/src
-  index.tsx       # EDIT THIS
-/test
-  blah.test.tsx   # EDIT THIS
-.gitignore
-package.json
-README.md         # EDIT THIS
-tsconfig.json
+```
+yarn add theme-custom-properties
+# or
+npm i --save theme-custom-properties
 ```
 
-### Rollup
+## Usage
 
-TSDX uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
+Convert your themes
 
-### TypeScript
+```ts
+import { transformThemeToCustomProperties } from "theme-custom-properties";
 
-`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
+const { bodyCSS, transformedThemes } = transformThemeToCustomProperties({
+  light: { /* ... */ },
+  dark: { /* ... */ }
+});
+```
 
-## Continuous Integration
+Add the `bodyCSS` to the document and pass the transformed theme to your `ThemeProvider` (e.g. [styled-components](https://styled-components.com/docs/advanced#the-theme-prop). Get the currently selected theme from something like [next-themes](https://github.com/pacocoursey/next-themes).
 
-### GitHub Actions
+For example, with [NextJS](https://nextjs.org/).
 
-Two actions are added by default:
+```tsx
+const MyApp = ({ Component, pageProps }: AppProps) => {
+  const currentTheme = "dark"
+  return (
+    <ThemeProvider theme={transformedThemes[currentTheme]}>
+      <Head>
+        <style>{bodyCSS}</style>
+      </Head>
+      <Component {...pageProps} />
+    </ThemeProvider>
+)
+```
 
-- `main` which installs deps w/ cache, lints, tests, and builds on all pushes against a Node and OS matrix
-- `size` which comments cost comparison of your library on every pull request using [`size-limit`](https://github.com/ai/size-limit)
+Now you can use your theme and it will use CSS variables instead.
 
-## Optimizations
+## API
 
-Please see the main `tsdx` [optimizations docs](https://github.com/palmerhq/tsdx#optimizations). In particular, know that you can take advantage of development-only optimizations:
+### transformThemeToCustomProperties(themes, options?) => { bodyCSS, transformedThemes }
 
-```js
-// ./types/index.d.ts
-declare var __DEV__: boolean;
-
-// inside your code...
-if (__DEV__) {
-  console.log('foo');
+- `themes`: Themes for all colors modes.
+e.g.
+```ts
+const themes = {
+  light: { /* ... */ },
+  dark: { /* ... */ },
 }
 ```
 
-You can also choose to install and use [invariant](https://github.com/palmerhq/tsdx#invariant) and [warning](https://github.com/palmerhq/tsdx#warning) functions.
+- `options`
+  * `defaultTheme = "light"`: The default color mode. `themes[defaultTheme]` will be added to `:root` in `bodyCSS`
+  * `attribute = "data-theme"`: HTML attribute modified based on the active theme. Accepts class and data-*
+  
+Returns
 
-## Module Formats
+- `bodyCSS`: string containing CSS custom properties that you can add to the HTML document
+- `transformedThemes`: object in same shape as `themes`. Values are replaced with CSS variable string
 
-CJS, ESModules, and UMD module formats are supported.
+## Development
 
-The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
+This library was bootstrapped with [tsdx](https://github.com/formium/tsdx).
 
-## Named Exports
+Build
 
-Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
+```
+yarn build
+```
 
-## Including Styles
+Test
 
-There are many ways to ship styles, including with CSS-in-JS. TSDX has no opinion on this, configure how you like.
-
-For vanilla CSS, you can include it at the root directory and add it to the `files` section in your `package.json`, so that it can be imported separately by your users and run through their bundler's loader.
-
-## Publishing to NPM
-
-We recommend using [np](https://github.com/sindresorhus/np).
+```
+yarn test
+```
