@@ -26,7 +26,6 @@ const { bodyCSS, transformedTheme } = transformThemeToCustomProperties({
 
 console.log(bodyCSS);
 /*
-
 :root {
   --colors-foreground: "black";
   --colors-background: "white";
